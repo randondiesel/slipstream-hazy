@@ -45,7 +45,6 @@ public class HazyCapability implements Capability {
 			return;
 		}
 
-		System.out.println("\n\n getting there \n\n");
 		if(hcfg.clientServerConfig() != null) {
 			sdm = new ClientServerProvider(hcfg, env.getServletContext());
 		}
@@ -68,6 +67,4 @@ public class HazyCapability implements Capability {
 		}
 		sdm = null;
 	}
-
-
 }
