@@ -8,7 +8,7 @@
 	</prerequisites>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>rd.slipstream.hazy</groupId>
+	<groupId>rd.slipstream</groupId>
 	<artifactId>rd.slipstream.hazy.capability</artifactId>
 	<name>Slipstream Hazy</name>
 	<version>0.1-SNAPSHOT</version>
