@@ -14,6 +14,7 @@
 
 package rd.slipstream.hazy.capability;
 
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -63,9 +64,9 @@ public class HazySessionData implements SessionData {
 		public HazySessionData createNew() {
 			UUID uuid = UUID.randomUUID();
 			StringBuilder sb = new StringBuilder();
-			sb.append(Long.toString(uuid.getMostSignificantBits(), 36))
+			sb.append(toPackedString(uuid.getMostSignificantBits()))
 				.append('-')
-				.append(Long.toString(uuid.getMostSignificantBits(), 36));
+				.append(toPackedString(uuid.getLeastSignificantBits()));
 			String sessionId = sb.toString().toLowerCase();
 
 			if(hzsd.sessions.containsKey(sessionId)) {
@@ -97,6 +98,19 @@ public class HazySessionData implements SessionData {
 			hzsd.sessionId = sessionId;
 			hzsd.sessionMeta = smeta;
 			return hzsd;
+		}
+
+		//Helper methods
+
+		/** the constant 2^64 */
+		private static final BigInteger TWO_64 = BigInteger.ONE.shiftLeft(64);
+
+		private String toPackedString(long l) {
+			BigInteger b = BigInteger.valueOf(l);
+			if(b.signum() < 0) {
+				b = b.add(TWO_64);
+			}
+			return b.toString(36);
 		}
 	}
 
