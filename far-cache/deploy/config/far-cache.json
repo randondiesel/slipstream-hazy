@@ -1,0 +1,16 @@
+{
+	"address" : "192.168.1.242",
+	"port" : "5701",
+	"cluster" : {
+		"member-addresses" : ["192.168.1.242:5701"],
+		"connection-timeout" : "20"
+	},
+	"session" : {
+		"backup-count" : "3",
+		"time-to-live" : "30"
+	},
+	"management-center" : {
+		"url" : "http://localhost:8080/hazelcast-mancenter",
+		"update-interval" : "1"
+	}
+}

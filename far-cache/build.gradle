@@ -1,0 +1,60 @@
+apply plugin : "java"
+apply plugin : "eclipse"
+
+version   = "0.1"
+buildDir  = "target"
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven {
+		url "http://repo.randondiesel.com/view/snapshots"
+	}
+	maven {
+		url "http://repo.randondiesel.com/view/releases"
+	}
+}
+
+dependencies {
+	implementation "org.slf4j:jul-to-slf4j:1.7.21"
+	implementation "ch.qos.logback:logback-core:1.1.8"
+	implementation "ch.qos.logback:logback-classic:1.1.8"
+	implementation "org.codehaus.janino:janino:3.0.6"
+	implementation "rd.jsonmapper:rd.jsonmapper:0.2-SNAPSHOT"
+	implementation "com.hazelcast:hazelcast:3.11"
+}
+
+task deploy {
+
+	doLast {
+		def deployDir = "${System.properties['user.home']}/deploy/slipstream-far-cache"
+		delete "$deployDir"
+		copy {
+			from configurations.default
+			from "$buildDir/libs"
+			into "$deployDir/lib"
+		}
+		copy {
+			from "deploy" into "$deployDir"
+		}
+		exec {
+			workingDir "$deployDir"
+			executable "chmod"
+			args = ["+x", "hazy-far-cache.sh"]
+		}
+	}
+}
+
+task execute(type:JavaExec) {
+	main = "rd.slipstream.hazy.farcache.Main"
+	classpath = sourceSets.main.runtimeClasspath
+	maxHeapSize = "512M"
+	minHeapSize = "32M"
+	args = ["./deploy/config/far-cache.json"]
+	systemProperties["devmode"] = "true"
+	//systemProperties["io.netty.allocator.numHeapArenas"] = "50"
+	//systemProperties["io.netty.noPreferDirect"] = "true"
+}

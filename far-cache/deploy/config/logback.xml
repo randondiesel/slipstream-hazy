@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+	<logger name="rd.slipstream.hazy.farcache" level="TRACE" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="com.hazelcast" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+</included>

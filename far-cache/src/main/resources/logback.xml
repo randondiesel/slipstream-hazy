@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				[%-5level] %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="WARN">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+	<if condition='isDefined("devmode")'>
+		<then>
+			<include file="deploy/config/logback.xml"/>
+		</then>
+		<else>
+			<include file="config/logback.xml"/>
+		</else>
+	</if>
+
+	<!--
+	<logger name="rd.slipstream.hazy" level="TRACE" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	-->
+
+</configuration>
